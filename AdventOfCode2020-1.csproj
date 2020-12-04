@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DayResolvers\Day5\Day5Resolver.cs" />
     <Compile Include="DayResolvers\Day4\Day4Resolver.cs" />
     <Compile Include="DayResolvers\Day3\Day3Resolver.cs" />
     <Compile Include="DayResolvers\Day2\Day2Resolver.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="DayResolvers\Day2\PasswordChecker.cs" />
     <Compile Include="DayResolvers\Day3\Map.cs" />
     <Compile Include="DayResolvers\Day3\Row.cs" />
+    <Compile Include="DayResolvers\Day4\Passport.cs" />
     <Compile Include="FileLoader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

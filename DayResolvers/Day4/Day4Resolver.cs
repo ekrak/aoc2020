@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace AdventOfCode2020_1.DayResolvers.Day4
 {
@@ -7,24 +9,50 @@ namespace AdventOfCode2020_1.DayResolvers.Day4
 
         public string Resolve(StreamReader input, int task)
         {
+            var passports = LoadPassports(input);
             if (task == 1)
             {
-                return Resolve1Internal(input);
+                return Resolve1Internal(passports);
 
             }
 
-            return Resolve2Internal(input);
+            return Resolve2Internal(passports);
 
         }
 
-        private string Resolve2Internal(StreamReader input)
+        private List<Passport> LoadPassports(StreamReader input)
         {
-            return null;
+            List<Passport> passports = new List<Passport>();
+            List<string> currentPassportData = new List<string>();
+            string line;
+            do
+            {
+                line = input.ReadLine();
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    passports.Add(new Passport(currentPassportData.ToArray()));
+                    currentPassportData.Clear();
+                }
+                else
+                {
+                    currentPassportData.Add(line);
+                }
+            } while (line != null);
+
+
+            return passports;
         }
 
-        private string Resolve1Internal(StreamReader input)
+        private string Resolve2Internal(List<Passport> passports)
         {
-            return null;
+            return passports.Count(pass => pass.IsValid2()).ToString();
         }
+
+        private string Resolve1Internal(List<Passport> passports)
+        {
+            return passports.Count(pass => pass.IsValid()).ToString();
+        }
+
+        
     }
 }
