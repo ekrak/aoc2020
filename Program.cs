@@ -4,6 +4,7 @@ using AdventOfCode2020_1.DayResolvers.Day2;
 using AdventOfCode2020_1.DayResolvers.Day3;
 using AdventOfCode2020_1.DayResolvers.Day4;
 using AdventOfCode2020_1.DayResolvers.Day5;
+using AdventOfCode2020_1.DayResolvers.Day6;
 
 namespace AdventOfCode2020_1
 {
@@ -53,11 +54,19 @@ namespace AdventOfCode2020_1
             #endregion
 
             #region Day 5
-            int day = 5;
+            //int day = 5;
+            //int task = 2;
+            //StreamReader input = FileLoader.LoadInputAsStream(day, 1);
+            //Day5Resolver resolver = new Day5Resolver();
+            //FileLoader.SaveResult(day, task, resolver.Resolve(input, task));
+            #endregion
+
+            #region Day 6
+            int day = 6;
             int task = 0;
             StreamReader input = FileLoader.LoadInputAsStream(day, task);
-            Day5Resolver resolver = new Day5Resolver();
-            FileLoader.SaveResult(day, task, resolver.Resolve(input, task));
+            Day6Resolver resolver = new Day6Resolver();
+            FileLoader.SaveResult(day, task, resolver.Resolve(input, 1));
             #endregion
         }
     }

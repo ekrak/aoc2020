@@ -9,24 +9,40 @@ namespace AdventOfCode2020_1.DayResolvers.Day5
 
         public string Resolve(StreamReader input, int task)
         {
+            List<BoardingPass> boardingPasses = LoadBoardingPasses(input);
+
             if (task == 1)
             {
-                return Resolve1Internal(input);
+                return Resolve1Internal(boardingPasses);
 
             }
 
-            return Resolve2Internal(input);
+            return Resolve2Internal(boardingPasses);
 
         }
 
-        private string Resolve2Internal(StreamReader input)
+        private List<BoardingPass> LoadBoardingPasses(StreamReader input)
         {
-            return null;
+            List<BoardingPass> boardingPasses = new List<BoardingPass>();
+            string line;
+            while ((line = input.ReadLine()) != null)
+            {
+                boardingPasses.Add(new BoardingPass(line.Trim()));
+            }
+
+            return boardingPasses;
         }
 
-        private string Resolve1Internal(StreamReader input)
+        private string Resolve2Internal(List<BoardingPass> boardingPasses)
         {
-            return null;
+            var ids = boardingPasses.Select(pass => pass.GetId()).ToList();
+            var result = Enumerable.Range(ids.Min(), ids.Max() - ids.Min()).Except(ids).ToList();
+            return result.Single().ToString();
+        }
+
+        private string Resolve1Internal(List<BoardingPass> boardingPasses)
+        {
+            return boardingPasses.Select(pass => pass.GetId()).Max().ToString();
         }
 
         
