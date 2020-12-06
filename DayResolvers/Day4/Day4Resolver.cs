@@ -50,7 +50,8 @@ namespace AdventOfCode2020_1.DayResolvers.Day4
 
         private string Resolve1Internal(List<Passport> passports)
         {
-            return passports.Count(pass => pass.IsValid()).ToString();
+        
+    turn passports.Count(pass => pass.IsValid()).ToString();
         }
 
         

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.IO;
+
+ions.Generic;
 using System.IO;
 
 namespace AdventOfCode2020_1.DayResolvers.Day2
@@ -37,7 +39,8 @@ namespace AdventOfCode2020_1.DayResolvers.Day2
             while ((line = input.ReadLine()) != null)
             {
                 PasswordChecker checker = new PasswordChecker(line);
-                if (checker.Validate()) counter++;
+        
+      if (checker.Validate()) counter++;
             }
 
             return counter.ToString();

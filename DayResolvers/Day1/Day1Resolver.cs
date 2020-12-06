@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+
+ing System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -79,7 +80,8 @@ namespace AdventOfCode2020_1.DayResolvers.Day1
             string[] valueStrings = input.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             foreach (var valueString in valueStrings)
             {
-                if(int.TryParse(valueString, out int resultValue) && resultValue <= 2020)
+                if(int.TryPars
+    eString, out int resultValue) && resultValue <= 2020)
                 {
                     numValues.Add(resultValue);
                 }

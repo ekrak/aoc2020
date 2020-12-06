@@ -1,14 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace AdventOfCode2020_1.DayResolvers.Day4
 {
     public class Passport
     {
+        private readonly string[] eyeColors = {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"};
+
+        public Passport(string[] inputLines)
+        {
+            Input = inputLines;
+            Parse();
+        }
+
         public string[] Input { get; set; }
         public string Byr { get; set; }
         public string Iyr { get; set; }
@@ -19,17 +23,9 @@ namespace AdventOfCode2020_1.DayResolvers.Day4
         public string Pid { get; set; }
         public string Cid { get; set; }
 
-        private string[] eyeColors = new string[] { "amb", "blu", "brn", "gry", "grn", "hzl", "oth" };
-
-        public Passport(string[] inputLines)
-        {
-            Input = inputLines;
-            Parse();
-        }
-
         public bool IsValid()
         {
-            return Byr != null && Iyr != null && Eyr != null && Hgt != null 
+            return Byr != null && Iyr != null && Eyr != null && Hgt != null
                    && Hcl != null && Ecl != null && Pid != null;
         }
 
@@ -41,36 +37,34 @@ namespace AdventOfCode2020_1.DayResolvers.Day4
         private bool ValidateData()
         {
             return IsNumberInRange(Byr, 1920, 2002) && IsNumberInRange(Iyr, 2010, 2020)
-                    && IsNumberInRange(Eyr, 2020, 2030) && IsValidHeight(Hgt) && IsValidHairColor(Hcl)
-                    && IsValidEyeColor(Ecl) && IsValidPid(Pid);
+                                                    && IsNumberInRange(Eyr, 2020, 2030) && IsValidHeight(Hgt) &&
+                                                    IsValidHairColor(Hcl)
+                                                    && IsValidEyeColor(Ecl) && IsValidPid(Pid);
         }
 
         private bool IsValidPid(string val)
         {
-            if (val.Length == 9 && char.IsDigit(val[0]))
-            {
-                return int.TryParse(val, out int valNum);
-            }
+            if (val.Length == 9 && char.IsDigit(val[0])) return int.TryParse(val, out var valNum);
 
             return false;
         }
 
         private bool IsNumberInRange(string val, int min, int max)
         {
-            return int.TryParse(val, out int valNum) && valNum >= min && valNum <= max;
+            return int.TryParse(val, out var valNum) && valNum >= min && valNum <= max;
         }
 
         private bool IsValidHeight(string val)
         {
             if (val.EndsWith("cm"))
             {
-                string substring = val.Substring(0, val.Length - 2);
+                var substring = val.Substring(0, val.Length - 2);
                 return IsNumberInRange(substring, 150, 193);
             }
-            
+
             if (val.EndsWith("in"))
             {
-                string substring = val.Substring(0, val.Length - 2);
+                var substring = val.Substring(0, val.Length - 2);
                 return IsNumberInRange(substring, 59, 76);
             }
 
@@ -81,7 +75,7 @@ namespace AdventOfCode2020_1.DayResolvers.Day4
         {
             if (val.StartsWith("#") && val.Length == 7)
             {
-                string substring = val.Substring(1, val.Length - 1);
+                var substring = val.Substring(1, val.Length - 1);
                 return Regex.IsMatch(substring, "[a-f0-9]+");
             }
 
@@ -97,7 +91,7 @@ namespace AdventOfCode2020_1.DayResolvers.Day4
         {
             foreach (var line in Input)
             {
-                string[] data = line.Trim().Split(' ');
+                var data = line.Trim().Split(' ');
                 ParseData(data);
             }
         }
@@ -106,7 +100,7 @@ namespace AdventOfCode2020_1.DayResolvers.Day4
         {
             foreach (var part in data)
             {
-                string[] keyValue = part.Trim().Split(':');
+                var keyValue = part.Trim().Split(':');
                 AssignData(keyValue[0], keyValue[1]);
             }
         }
@@ -139,7 +133,6 @@ namespace AdventOfCode2020_1.DayResolvers.Day4
                 case "cid":
                     Cid = value;
                     break;
-
             }
         }
     }

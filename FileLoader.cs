@@ -8,19 +8,19 @@ namespace AdventOfCode2020_1
 
         public static string LoadInput(int day, int task)
         {
-            string path = Path.Combine(basePath, day.ToString(), $"input{task}.txt");
+            var path = Path.Combine(basePath, day.ToString(), $"input{task}.txt");
             return File.ReadAllText(path);
         }
 
         public static StreamReader LoadInputAsStream(int day, int task)
         {
-            string path = Path.Combine(basePath, day.ToString(), $"input{task}.txt");
+            var path = Path.Combine(basePath, day.ToString(), $"input{task}.txt");
             return new StreamReader(path);
         }
 
         public static void SaveResult(int day, int task, string result)
         {
-            string path = Path.Combine(basePath, day.ToString(), $"result{task}.txt");
+            var path = Path.Combine(basePath, day.ToString(), $"result{task}.txt");
             File.WriteAllText(path, result);
         }
     }
