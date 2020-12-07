@@ -76,7 +76,18 @@ namespace AdventOfCode2020_1
 
             #region Day 7
 
-            var day = 7;
+            //var day = 7;
+            //var task = 0;
+            //var input = FileLoader.LoadInputAsStream(day, task);
+            //var resolver = new Day7Resolver();
+            //FileLoader.SaveResult(day, task, resolver.Resolve(input, 1));
+
+            #endregion
+
+
+            #region Day 8
+
+            var day = 8;
             var task = 0;
             var input = FileLoader.LoadInputAsStream(day, task);
             var resolver = new Day7Resolver();

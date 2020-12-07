@@ -1,8 +1,5 @@
 ﻿using System.IO;
 
-ions.Generic;
-using System.IO;
-
 namespace AdventOfCode2020_1.DayResolvers.Day2
 {
     public class Day2Resolver

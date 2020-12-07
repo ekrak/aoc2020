@@ -40,12 +40,8 @@ namespace AdventOfCode2020_1.DayResolvers.Day5
             return result.Single().ToString();
         }
 
-        private string Resolve1Internal(List<Boa
-    ass> boardingPasses)
-        {
-            return boardingPasses.Select(pass => pass.GetId()).Max().ToString();
-        }
+        private string Resolve1Internal(List<BoardingPass> boardingPasses) => boardingPasses.Select(pass => pass.GetId()).Max().ToString();
 
-        
+
     }
 }

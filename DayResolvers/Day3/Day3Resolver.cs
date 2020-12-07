@@ -45,8 +45,7 @@ namespace AdventOfCode2020_1.DayResolvers.Day3
         private string Resolve1Internal(StreamReader input)
         {
             Map map = new Map(input, new Tuple<int, int>(0,0), new Tuple<int, int>(3, 1));
-            return map
-    ve1().ToString();
+            return map.Resolve1().ToString();
         }
     }
 }

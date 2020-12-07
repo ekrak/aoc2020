@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 
-ing System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace AdventOfCode2020_1.DayResolvers.Day1
 {
     public class Day1Resolver
@@ -80,8 +76,7 @@ namespace AdventOfCode2020_1.DayResolvers.Day1
             string[] valueStrings = input.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             foreach (var valueString in valueStrings)
             {
-                if(int.TryPars
-    eString, out int resultValue) && resultValue <= 2020)
+                if(int.TryParse(valueString, out int resultValue) && resultValue <= 2020)
                 {
                     numValues.Add(resultValue);
                 }
