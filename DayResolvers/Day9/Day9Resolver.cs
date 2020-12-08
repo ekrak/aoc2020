@@ -1,8 +1,8 @@
 ﻿using System.IO;
 
-namespace AdventOfCode2020_1.DayResolvers.Day8
+namespace AdventOfCode2020_1.DayResolvers.Day9
 {
-    public class Day8Resolver
+    public class Day9Resolver
     {
         public string Resolve(StreamReader input, int task)
         {
@@ -13,14 +13,12 @@ namespace AdventOfCode2020_1.DayResolvers.Day8
 
         private string Resolve2Internal(StreamReader input)
         {
-            Game game = new Game(input);
-            return game.Run2().ToString();
+            return null;
         }
 
         private string Resolve1Internal(StreamReader input)
         {
-            Game game = new Game(input);
-            return game.Run().ToString();
+            return null;
         }
     }
 }
