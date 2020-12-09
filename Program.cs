@@ -6,7 +6,7 @@ namespace AdventOfCode2020_1
     {
         private static void Main(string[] args)
         {
-            var day = 9;
+            var day = 10;
             var task = 0;
             var input = FileLoader.LoadInputAsStream(day, task);
             var resolver = new Day9Resolver();

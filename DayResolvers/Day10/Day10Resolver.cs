@@ -1,9 +1,8 @@
 ﻿using System.IO;
-using System.Linq;
 
-namespace AdventOfCode2020_1.DayResolvers.Day9
+namespace AdventOfCode2020_1.DayResolvers.Day10
 {
-    public class Day9Resolver
+    public class Day10Resolver
     {
         public string Resolve(StreamReader input, int task)
         {
@@ -14,15 +13,12 @@ namespace AdventOfCode2020_1.DayResolvers.Day9
 
         private string Resolve2Internal(StreamReader input)
         {
-            Code code = new Code(input, 25);
-            var ew =  code.GetEncryptionWeakness();
-            return (ew.Min() + ew.Max()).ToString();
+            return null;
         }
 
         private string Resolve1Internal(StreamReader input)
         {
-            Code code = new Code(input, 25);
-            return code.GetFirstWrong().ToString();
+            return null;
         }
     }
 }
