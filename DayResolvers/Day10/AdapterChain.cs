@@ -90,20 +90,20 @@ namespace AdventOfCode2020_1.DayResolvers.Day10
         // comb(x) {
         //      if(x==0) return 1;
         //      if(x==1) return 2;
-        //      return 2*comb(x-1) - 3^(x-3)
+        //      return 2^x - 3^(x-3)
         // }
         //
-        // 1 => 2   --- 1 * 2 - 0
-        // 2 => 4   --- 2 (prev.result) * 2 - 0
-        // 3 => 7   --- 4 (prev.result) * 2 - 1 = 3^(3-3)
-        // 4 => 13  --- 8 (prev.result) * 2 - 3 = 3^(4-3)
-        // 5 => 23  --- 16(prev.result) * 2 - 9 = 3^(5-3)
+        // 1 => 2   --- 2^1 - 0
+        // 2 => 4   --- 2^2 - 0
+        // 3 => 7   --- 2^3 - 1 = 3^(3-3)
+        // 4 => 13  --- 2^4 - 3 = 3^(4-3)
+        // 5 => 23  --- 2^5 - 9 = 3^(5-3)
 
         private double GetCalculatedCombinations(int count)
         {
             if (count == 0) return 1;
             if (count == 1) return 2;
-            return 2 * GetCalculatedCombinations(count - 1) - GetPow3(count);
+            return Math.Pow(2, count) - GetPow3(count);
         }
 
         private double GetPow3(int count)
