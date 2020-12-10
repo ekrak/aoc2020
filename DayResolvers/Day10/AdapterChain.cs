@@ -90,6 +90,7 @@ namespace AdventOfCode2020_1.DayResolvers.Day10
         // comb(x) {
         //      if(x==0) return 1;
         //      if(x==1) return 2;
+        //      if(x==2) return 4;
         //      return 2^x - 3^(x-3)
         // }
         //
