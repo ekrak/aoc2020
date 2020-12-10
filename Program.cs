@@ -1,4 +1,4 @@
-﻿using AdventOfCode2020_1.DayResolvers.Day9;
+﻿using AdventOfCode2020_1.DayResolvers.Day11;
 
 namespace AdventOfCode2020_1
 {
@@ -6,10 +6,10 @@ namespace AdventOfCode2020_1
     {
         private static void Main(string[] args)
         {
-            var day = 10;
+            var day = 11;
             var task = 0;
             var input = FileLoader.LoadInputAsStream(day, task);
-            var resolver = new Day9Resolver();
+            var resolver = new Day11Resolver();
             FileLoader.SaveResult(day, task, resolver.Resolve(input, 1));
         }
     }
