@@ -6,19 +6,20 @@ namespace AdventOfCode2020_1.DayResolvers.Day11
     {
         public string Resolve(StreamReader input, int task)
         {
-            if (task == 1) return Resolve1Internal(null);
+            SeatMap seatMap = new SeatMap(input);
+            if (task == 1) return Resolve1Internal(seatMap);
 
-            return Resolve2Internal(null);
+            return Resolve2Internal(seatMap);
         }
 
-        private string Resolve2Internal(object chain)
+        private string Resolve2Internal(SeatMap seatMap)
         {
-            return null;
+            return seatMap.GetOccupiedSeats(2).ToString();
         }
 
-        private string Resolve1Internal(object chain)
+        private string Resolve1Internal(SeatMap seatMap)
         {
-            return null;
+            return seatMap.GetOccupiedSeats(1).ToString();
         }
     }
 }
