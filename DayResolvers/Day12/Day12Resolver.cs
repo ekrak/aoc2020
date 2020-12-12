@@ -6,19 +6,20 @@ namespace AdventOfCode2020_1.DayResolvers.Day12
     {
         public string Resolve(StreamReader input, int task)
         {
-            if (task == 1) return Resolve1Internal(null);
+            FerryDistance dist = new FerryDistance(input);
+            if (task == 1) return Resolve1Internal(dist);
 
-            return Resolve2Internal(null);
+            return Resolve2Internal(dist);
         }
 
-        private string Resolve2Internal(object seatMap)
+        private string Resolve2Internal(FerryDistance dist)
         {
-            return null;
+            return dist.GetManhattanDistance2().ToString();
         }
 
-        private string Resolve1Internal(object seatMap)
+        private string Resolve1Internal(FerryDistance dist)
         {
-            return null;
+            return dist.GetManhattanDistance().ToString();
         }
     }
 }
