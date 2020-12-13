@@ -10,7 +10,7 @@ namespace AdventOfCode2020_1
             var task = 0;
             var input = FileLoader.LoadInputAsStream(day, task);
             var resolver = new Day13Resolver();
-            FileLoader.SaveResult(day, task, resolver.Resolve(input, 1));
+            FileLoader.SaveResult(day, task, resolver.Resolve(input, 2));
         }
     }
 }
