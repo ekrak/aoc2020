@@ -43,6 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DayResolvers\Day15\Day15Resolver.cs" />
+    <Compile Include="DayResolvers\Day15\MemoryGame.cs" />
+    <Compile Include="DayResolvers\Day14\DockingProgram.cs" />
+    <Compile Include="DayResolvers\DayX\DayXResolver.cs" />
+    <Compile Include="DayResolvers\Day14\Day14Resolver.cs" />
     <Compile Include="DayResolvers\Day13\BusSchedule.cs" />
     <Compile Include="DayResolvers\Day13\ChineseRemainderTheorem.cs" />
     <Compile Include="DayResolvers\Day13\Day13Resolver.cs" />
