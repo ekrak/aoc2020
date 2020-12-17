@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DayResolvers\Day17\Coordinate.cs" />
+    <Compile Include="DayResolvers\Day17\Day17Resolver.cs" />
+    <Compile Include="DayResolvers\Day17\CubePocket.cs" />
     <Compile Include="DayResolvers\Day16\Day16Resolver.cs" />
     <Compile Include="DayResolvers\Day16\LanguageProcessor.cs" />
     <Compile Include="DayResolvers\Day15\Day15Resolver.cs" />
