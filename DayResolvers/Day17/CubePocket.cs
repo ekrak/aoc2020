@@ -8,24 +8,43 @@ namespace AdventOfCode2020_1.DayResolvers.Day17
 {
     public class CubePocket
     {
-        Dictionary<int, List<Coordinate>> zLayers = new Dictionary<int, List<Coordinate>>();
+        public Dictionary<int, List<Coordinate>> ZLayers { get; set; } = new Dictionary<int, List<Coordinate>>();
+
+        private int w = 0;
+
+        public int W
+        {
+            get => w;
+
+            set
+            {
+                w = value;
+                var zKeys = ZLayers.Keys.ToList();
+                zKeys.ForEach(zKey => { ZLayers[zKey].ForEach(c => c.W = w); });
+            }
+        }
 
         public CubePocket(StreamReader input)
         {
            string line = input.ReadLine();
-           zLayers.Add(0, new List<Coordinate>());
+           ZLayers.Add(0, new List<Coordinate>());
            int currentY = 0;
            while (line!=null)
            {
                var charArray = line.ToCharArray();
                for (int i = 0; i < charArray.Length; i++)
                {
-                   zLayers[0].Add(new Coordinate(i, currentY, 0, charArray[i]));
+                   ZLayers[0].Add(new Coordinate(i, currentY, 0, 0, charArray[i]));
                }
 
                currentY++;
                line = input.ReadLine();
            }
+        }
+
+        public CubePocket(Dictionary<int, List<Coordinate>> zLayers)
+        {
+            ZLayers = zLayers;
         }
 
         public string GetActiveCubes(int loops)
@@ -34,25 +53,48 @@ namespace AdventOfCode2020_1.DayResolvers.Day17
             long sum = 0;
             for (int i = 1; i <= loops; i++)
             {
-                Loop();
+                LoopInternal();
                 print += Print(i);
             }
 
-            var zKeys = zLayers.Keys.ToList();
-            zKeys.ForEach(zKey => { sum += zLayers[zKey].Count(c => c.IsActive); });
-            return sum + Environment.NewLine + print;
+            
+            return GetActiveCount() + Environment.NewLine + print;
+        }
+
+        public CubePocket Copy()
+        {
+            Dictionary<int, List<Coordinate>> copyZLayers = new Dictionary<int, List<Coordinate>>();
+            var zKeys = ZLayers.Keys.ToList();
+            zKeys.ForEach(zKey =>
+            {
+                List<Coordinate> copyCoordinates = new List<Coordinate>();
+                ZLayers[zKey].ForEach(layer => copyCoordinates.Add(layer.Copy(true)));
+                copyZLayers.Add(zKey, copyCoordinates);
+            });
+
+            return new CubePocket(copyZLayers);
+        }
+
+        public bool IsEmpty() => GetActiveCount() == 0;
+
+        public long GetActiveCount()
+        {
+            long sum = 0;
+            var zKeys = ZLayers.Keys.ToList();
+            zKeys.ForEach(zKey => { sum += ZLayers[zKey].Count(c => c.IsActive); });
+            return sum;
         }
 
         private string Print(int loop)
         {
             string toReturn = loop + " --------------------------------------------------------";
-            var minZ = zLayers.Keys.Min();
-            var maxZ = zLayers.Keys.Max();
+            var minZ = ZLayers.Keys.Min();
+            var maxZ = ZLayers.Keys.Max();
 
             for (int z = minZ; z <= maxZ; z++)
             {
                 toReturn += Environment.NewLine + Environment.NewLine + "Z=" + z + Environment.NewLine;
-                var layer = zLayers[z];
+                var layer = ZLayers[z];
                 var minx = layer.Min(x => x.X);
                 var maxx = layer.Max(x => x.X);
                 var miny = layer.Min(x => x.Y);
@@ -73,15 +115,17 @@ namespace AdventOfCode2020_1.DayResolvers.Day17
         }
 
 
-        private void Loop()
+        private void LoopInternal()
+        {
+            ZLayers = Loop();
+        }
+
+        public Dictionary<int, List<Coordinate>> Loop(Dictionary<int, CubePocket> wLayers = null)
         {
             Dictionary<int, List<Coordinate>> newZLayers = new Dictionary<int, List<Coordinate>>();
-            var zKeys = zLayers.Keys.ToList();
+            var zKeys = ZLayers.Keys.ToList();
             zKeys.Sort();
-            zKeys.ForEach(key =>
-            {
-                newZLayers.Add(key, LoopZ(key));
-            });
+            zKeys.ForEach(key => { newZLayers.Add(key, LoopZ(key, wLayers)); });
 
             var minZ = zKeys.Min();
             var maxZ = zKeys.Max();
@@ -90,43 +134,43 @@ namespace AdventOfCode2020_1.DayResolvers.Day17
             List<int> addedZs = new List<int>();
             while (!IsEmpty(newZLayers[lastZ]))
             {
-                var copy = Copy(zLayers[lastZ]);
+                var copy = Copy(ZLayers[lastZ]);
                 lastZ--;
                 copy.ForEach(c => c.Z = lastZ);
-                zLayers.Add(lastZ, copy);
+                ZLayers.Add(lastZ, copy);
                 addedZs.Add(lastZ);
-                newZLayers.Add(lastZ, LoopZ(lastZ));
+                newZLayers.Add(lastZ, LoopZ(lastZ, wLayers));
             }
 
-            addedZs.ForEach(z => zLayers.Remove(z));
+            addedZs.ForEach(z => ZLayers.Remove(z));
             newZLayers.Remove(lastZ);
 
             addedZs.Clear();
             lastZ = maxZ;
             while (!IsEmpty(newZLayers[lastZ]))
             {
-                var copy = Copy(zLayers[lastZ]);
+                var copy = Copy(ZLayers[lastZ]);
                 lastZ++;
                 copy.ForEach(c => c.Z = lastZ);
-                zLayers.Add(lastZ, copy);
+                ZLayers.Add(lastZ, copy);
                 addedZs.Add(lastZ);
-                newZLayers.Add(lastZ, LoopZ(lastZ));
+
+                newZLayers.Add(lastZ, LoopZ(lastZ, wLayers));
             }
 
-            addedZs.ForEach(z => zLayers.Remove(z));
+            addedZs.ForEach(z => ZLayers.Remove(z));
             newZLayers.Remove(lastZ);
-
-            zLayers = newZLayers;
-
+            return newZLayers;
         }
 
-        private List<Coordinate> LoopZ(int zKey)
+        private List<Coordinate> LoopZ(int zKey, Dictionary<int, CubePocket> wLayers)
         {
             List<Coordinate> newLayer = new List<Coordinate>();
-            var layer = zLayers[zKey];
+            var layer = ZLayers[zKey];
             layer.ForEach(coordinate =>
             {
-                newLayer.Add(coordinate.Evaluate(zLayers));
+                var newCoordinate = wLayers != null ? coordinate.EvaluateWithW(wLayers) : coordinate.Evaluate(ZLayers);
+                newLayer.Add(newCoordinate);
             });
 
             var minX = newLayer.Select(c => c.X).Min();
@@ -146,7 +190,11 @@ namespace AdventOfCode2020_1.DayResolvers.Day17
                 allNewTempCoordinates.AddRange(tempCoordinates);
                 tempCoordinates = new List<Coordinate>();
                 layer.AddRange(newCoordinates);
-                newCoordinates.ForEach(coordinate => tempCoordinates.Add(coordinate.Evaluate(zLayers)));
+                newCoordinates.ForEach(coordinate =>
+                {
+                    var newCoordinate = wLayers != null ? coordinate.EvaluateWithW(wLayers) : coordinate.Evaluate(ZLayers);
+                    tempCoordinates.Add(newCoordinate);
+                });
                 minX--;
                 minY--;
                 maxX++;
