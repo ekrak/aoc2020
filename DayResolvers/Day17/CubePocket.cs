@@ -61,6 +61,49 @@ namespace AdventOfCode2020_1.DayResolvers.Day17
             return GetActiveCount() + Environment.NewLine + print;
         }
 
+        public int GetMaxCoordinate()
+        {
+            List<int> vals = new List<int>();
+            var zKeys = ZLayers.Keys.ToList();
+
+            zKeys.ForEach(zKey =>
+            {
+                var list = ZLayers[zKey];
+                vals.Add(list.Max(x => x.X));
+                vals.Add(list.Max(x => x.Y));
+                vals.Add(list.Max(x => x.Z));
+                vals.Add(list.Max(x => x.W));
+            });
+
+            vals.AddRange(ZLayers.Keys);
+            return vals.Max();
+
+        }
+
+        public int GetMinCoordinate()
+        {
+            List<int> vals = new List<int>();
+            var zKeys = ZLayers.Keys.ToList();
+
+            zKeys.ForEach(zKey =>
+            {
+                var list = ZLayers[zKey];
+                vals.Add(list.Min(x => x.X));
+                vals.Add(list.Min(x => x.Y));
+                vals.Add(list.Min(x => x.Z));
+                vals.Add(list.Min(x => x.W));
+            });
+
+            vals.AddRange(ZLayers.Keys);
+            return vals.Min();
+
+        }
+
+        public override string ToString()
+        {
+            return ZLayers.Any(z => z.Value.Any(c => c.IsActive)) ? "Active" : "Inactive";
+        }
+
         public CubePocket Copy()
         {
             Dictionary<int, List<Coordinate>> copyZLayers = new Dictionary<int, List<Coordinate>>();
@@ -85,9 +128,10 @@ namespace AdventOfCode2020_1.DayResolvers.Day17
             return sum;
         }
 
-        private string Print(int loop)
+        public string Print(int loop)
         {
-            string toReturn = loop + " --------------------------------------------------------";
+            string toReturn = "LOOP " + loop + " --------------------------------------------------------";
+            toReturn += "W = " + W;
             var minZ = ZLayers.Keys.Min();
             var maxZ = ZLayers.Keys.Max();
 
@@ -130,10 +174,17 @@ namespace AdventOfCode2020_1.DayResolvers.Day17
             var minZ = zKeys.Min();
             var maxZ = zKeys.Max();
 
+
+
+            var minCoordinate = GetMinCoordinate();
+            var maxCoordinate = GetMaxCoordinate();
+
             var lastZ = minZ;
             List<int> addedZs = new List<int>();
-            while (!IsEmpty(newZLayers[lastZ]))
+            bool go = lastZ >= minCoordinate;
+            while (go || !IsEmpty(newZLayers[lastZ]))
             {
+                go = lastZ >= minCoordinate;
                 var copy = Copy(ZLayers[lastZ]);
                 lastZ--;
                 copy.ForEach(c => c.Z = lastZ);
@@ -143,12 +194,15 @@ namespace AdventOfCode2020_1.DayResolvers.Day17
             }
 
             addedZs.ForEach(z => ZLayers.Remove(z));
-            newZLayers.Remove(lastZ);
+            if(lastZ != minZ)
+                newZLayers.Remove(lastZ);
 
             addedZs.Clear();
             lastZ = maxZ;
-            while (!IsEmpty(newZLayers[lastZ]))
+            go = lastZ <= maxCoordinate;
+            while (go || !IsEmpty(newZLayers[lastZ]))
             {
+                go = lastZ <= maxCoordinate;
                 var copy = Copy(ZLayers[lastZ]);
                 lastZ++;
                 copy.ForEach(c => c.Z = lastZ);
@@ -159,7 +213,9 @@ namespace AdventOfCode2020_1.DayResolvers.Day17
             }
 
             addedZs.ForEach(z => ZLayers.Remove(z));
-            newZLayers.Remove(lastZ);
+            if (lastZ != maxZ)
+                newZLayers.Remove(lastZ);
+
             return newZLayers;
         }
 
@@ -183,6 +239,13 @@ namespace AdventOfCode2020_1.DayResolvers.Day17
 
             List<Coordinate> tempCoordinates = new List<Coordinate>();
             List<Coordinate> allNewTempCoordinates = new List<Coordinate>();
+
+
+
+            var minCoordinate = GetMinCoordinate();
+            var maxCoordinate = GetMaxCoordinate();
+
+            bool go = true;
             do
             {
                 newCoordinates = GetSurroundingCoordinates(minX, minY, maxX, maxY, zKey);
@@ -199,7 +262,9 @@ namespace AdventOfCode2020_1.DayResolvers.Day17
                 minY--;
                 maxX++;
                 maxY++;
-            } while (!IsEmpty(tempCoordinates));
+                List<int> coordinateExtrems = new List<int>() {minX, minY, maxX, maxY};
+                go = coordinateExtrems.Min() >= minCoordinate  || coordinateExtrems.Max() <= maxCoordinate ;
+            } while (go || !IsEmpty(tempCoordinates));
 
             allNewCoordinates.ForEach(c => layer.Remove(c));
             newLayer.AddRange(allNewTempCoordinates);
@@ -212,14 +277,14 @@ namespace AdventOfCode2020_1.DayResolvers.Day17
             List<Coordinate> surroundings = new List<Coordinate>(); 
             for (int x = minX-1; x <= maxX + 1; x++)
             {
-                surroundings.Add(new Coordinate(x, minY-1, z, '.'));
-                surroundings.Add(new Coordinate(x, maxY + 1, z, '.'));
+                surroundings.Add(new Coordinate(x, minY-1, z, W, '.'));
+                surroundings.Add(new Coordinate(x, maxY + 1, z, W, '.'));
             }
 
             for (int y = minY; y <= maxY; y++)
             {
-                surroundings.Add(new Coordinate(minX-1, y, z, '.'));
-                surroundings.Add(new Coordinate(maxX+1, y, z, '.'));
+                surroundings.Add(new Coordinate(minX-1, y, z, W, '.'));
+                surroundings.Add(new Coordinate(maxX+1, y, z, W, '.'));
             }
 
             return surroundings;

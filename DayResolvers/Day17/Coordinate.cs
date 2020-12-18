@@ -35,6 +35,11 @@ namespace AdventOfCode2020_1.DayResolvers.Day17
             return new Coordinate(X,Y,Z,W, emptyValue ? '.' : Value);
         }
 
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
+
         public bool IsActive => Value == '#';
 
         public Coordinate Evaluate(Dictionary<int, List<Coordinate>> coordinatesByZ)
@@ -56,18 +61,18 @@ namespace AdventOfCode2020_1.DayResolvers.Day17
         private int GetNumberOfNeighbours(Dictionary<int, CubePocket> coordinatesByW)
         {
             int sum = 0;
-            if (coordinatesByW.ContainsKey(W)) sum += GetNumberOfNeighboursForW(coordinatesByW[W].ZLayers);
-            if (coordinatesByW.ContainsKey(W - 1)) sum += GetNumberOfNeighboursForW(coordinatesByW[W-1].ZLayers);
-            if (coordinatesByW.ContainsKey(W + 1)) sum += GetNumberOfNeighboursForW(coordinatesByW[W+1].ZLayers);
+            if (coordinatesByW.ContainsKey(W) && !coordinatesByW[W].IsEmpty()) sum += GetNumberOfNeighboursForW(coordinatesByW[W].ZLayers);
+            if (coordinatesByW.ContainsKey(W - 1) && !coordinatesByW[W-1].IsEmpty()) sum += GetNumberOfNeighboursForW(coordinatesByW[W-1].ZLayers);
+            if (coordinatesByW.ContainsKey(W + 1) && !coordinatesByW[W+1].IsEmpty()) sum += GetNumberOfNeighboursForW(coordinatesByW[W+1].ZLayers);
             return sum;
         }
 
         private int GetNumberOfNeighboursForW(Dictionary<int, List<Coordinate>> coordinatesByZ)
         {
             int sum = 0;
-            if(coordinatesByZ.ContainsKey(Z)) sum += GetNumberOfNeighboursForZ2(coordinatesByZ[Z]);
-            if (coordinatesByZ.ContainsKey(Z-1)) sum += GetNumberOfNeighboursForZ2(coordinatesByZ[Z-1]);
-            if (coordinatesByZ.ContainsKey(Z+1)) sum += GetNumberOfNeighboursForZ2(coordinatesByZ[Z+1]);
+            if(coordinatesByZ.ContainsKey(Z) && coordinatesByZ[Z].Any(x=>x.IsActive)) sum += GetNumberOfNeighboursForZ2(coordinatesByZ[Z]);
+            if (coordinatesByZ.ContainsKey(Z-1) && coordinatesByZ[Z-1].Any(x => x.IsActive)) sum += GetNumberOfNeighboursForZ2(coordinatesByZ[Z-1]);
+            if (coordinatesByZ.ContainsKey(Z+1) && coordinatesByZ[Z+1].Any(x => x.IsActive)) sum += GetNumberOfNeighboursForZ2(coordinatesByZ[Z+1]);
             return sum;
         }
 
@@ -80,26 +85,43 @@ namespace AdventOfCode2020_1.DayResolvers.Day17
             return sum;
         }
 
+        //private int GetNumberOfNeighboursForY(List<Coordinate> yCoordinates)
+        //{
+        //    int sum = 0;
+        //    bool isSameZ = yCoordinates.First().Z == Z;
+        //    bool isSameY = yCoordinates.First().Y == Y;
+        //    bool isSameW = yCoordinates.First().W == W;
+
+        //    var xMinus1 = yCoordinates.FirstOrDefault(c => c.X == X - 1);
+        //    if (xMinus1 != null) sum += xMinus1.Value == '#' ? 1 : 0;
+
+        //    if (!(isSameZ && isSameY && isSameW))
+        //    {
+        //        var x = yCoordinates.FirstOrDefault(c => c.X == X);
+        //        if (x != null) sum += x.Value == '#' ? 1 : 0;
+        //    }
+
+        //    var xPlus1 = yCoordinates.FirstOrDefault(c => c.X == X + 1);
+        //    if (xPlus1 != null) sum += xPlus1.Value == '#' ? 1 : 0;
+
+        //    return sum;
+        //}
+
         private int GetNumberOfNeighboursForY(List<Coordinate> yCoordinates)
         {
             int sum = 0;
-            bool isSameZ = yCoordinates.First().Z == Z;
-            bool isSameY = yCoordinates.First().Y == Y;
-            bool isSameW = yCoordinates.First().W == W;
-
-            var xMinus1 = yCoordinates.FirstOrDefault(c => c.X == X - 1);
-            if (xMinus1 != null) sum += xMinus1.Value == '#' ? 1 : 0;
-
-            if (!(isSameZ && isSameY && isSameW))
-            {
-                var x = yCoordinates.FirstOrDefault(c => c.X == X);
-                if (x != null) sum += x.Value == '#' ? 1 : 0;
-            }
-
-            var xPlus1 = yCoordinates.FirstOrDefault(c => c.X == X + 1);
-            if (xPlus1 != null) sum += xPlus1.Value == '#' ? 1 : 0;
-
+            if (yCoordinates.Any(c => c.X == X - 1)) sum += NeighbourCount(yCoordinates.Single(c => c.X == X - 1));
+            if (yCoordinates.Any(c => c.X == X)) sum += NeighbourCount(yCoordinates.Single(c => c.X == X));
+            if (yCoordinates.Any(c => c.X == X + 1)) sum += NeighbourCount(yCoordinates.Single(c => c.X == X + 1));
             return sum;
+        }
+
+        private int NeighbourCount(Coordinate xCoordinate)
+        {
+            if (xCoordinate.X == X && xCoordinate.Y == Y && xCoordinate.Z == Z && xCoordinate.W == W)
+                return 0;
+
+            return xCoordinate.IsActive ? 1 : 0;
         }
 
 

@@ -13,6 +13,9 @@ namespace AdventOfCode2020_1.DayResolvers.Day17
             return Resolve2Internal(cp2);
         }
 
+        //This is the worst code I've written in 2020
+        //Low performance, low readability
+        //But .. solves the problem under 30 min, who cares
         private string Resolve2Internal(CubePocket4 input)
         {
             return input.GetActiveCubes(6);
