@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DayResolvers\Day19\Day19Resolver.cs" />
+    <Compile Include="DayResolvers\Day19\Rule.cs" />
+    <Compile Include="DayResolvers\Day19\Rules.cs" />
     <Compile Include="DayResolvers\Day18\Day18Resolver.cs" />
     <Compile Include="DayResolvers\Day18\MathGroup.cs" />
     <Compile Include="DayResolvers\Day17\Coordinate.cs" />
@@ -54,6 +57,7 @@
     <Compile Include="DayResolvers\Day15\Day15Resolver.cs" />
     <Compile Include="DayResolvers\Day15\MemoryGame.cs" />
     <Compile Include="DayResolvers\Day14\DockingProgram.cs" />
+    <Compile Include="DayResolvers\Day19\Validator.cs" />
     <Compile Include="DayResolvers\DayX\DayXResolver.cs" />
     <Compile Include="DayResolvers\Day14\Day14Resolver.cs" />
     <Compile Include="DayResolvers\Day13\BusSchedule.cs" />
