@@ -58,6 +58,12 @@
     <Compile Include="DayResolvers\Day15\MemoryGame.cs" />
     <Compile Include="DayResolvers\Day14\DockingProgram.cs" />
     <Compile Include="DayResolvers\Day19\Validator.cs" />
+    <Compile Include="DayResolvers\Day21\Day21Resolver.cs" />
+    <Compile Include="DayResolvers\Day21\Food.cs" />
+    <Compile Include="DayResolvers\Day21\FoodList.cs" />
+    <Compile Include="DayResolvers\Day20\Day20Resolver.cs" />
+    <Compile Include="DayResolvers\Day20\SquareImage.cs" />
+    <Compile Include="DayResolvers\Day20\Tile.cs" />
     <Compile Include="DayResolvers\DayX\DayXResolver.cs" />
     <Compile Include="DayResolvers\Day14\Day14Resolver.cs" />
     <Compile Include="DayResolvers\Day13\BusSchedule.cs" />
