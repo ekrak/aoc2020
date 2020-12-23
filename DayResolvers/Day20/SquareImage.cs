@@ -32,6 +32,5 @@ namespace AdventOfCode2020_1.DayResolvers.Day20
                 line = input.ReadLine();
             }
         }
-
     }
 }
